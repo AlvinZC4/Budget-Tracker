@@ -1,21 +1,21 @@
-const { json, response } = require("express")
-
 let db
 
 const request = indexedDB.open("budget", 1)
 
-request.onupgradeneeded(function ({ target }) {
+request.onupgradeneeded = function ({ target }) {
     const db = target.result
     db.createStoreObject("pending", { autoIncrement: true })
-})
+}
 
 request.onsuccess = function({ target }) {
     db = target.result
+
+    if (navigator.onLine) {
+        checkDatabase()
+    }
+    
 }
 
-if (navigator.onLine) {
-    checkDatabase()
-}
 
 request.onerror = function({ target }) {
     console.log("Error: " + target.errorCode)
@@ -30,6 +30,7 @@ function saveRecord(record) {
 }
 
 function checkDatabase() {
+    console.log("db", db)
     const transaction = db.transaction(["pending"], "readwrite")
 
     const store = transaction.objectStore("pending")
@@ -57,3 +58,5 @@ function checkDatabase() {
         }
     }
 }
+
+window.addEventListener("online", checkDatabase)
