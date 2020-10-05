@@ -4,7 +4,7 @@ const request = indexedDB.open("budget", 1)
 
 request.onupgradeneeded = function ({ target }) {
     const db = target.result
-    db.createStoreObject("pending", { autoIncrement: true })
+    db.createObjectStore("pending", { autoIncrement: true })
 }
 
 request.onsuccess = function({ target }) {
