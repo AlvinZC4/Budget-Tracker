@@ -1,21 +1,19 @@
-const { response } = require("express")
-
 console.log("Hello from service worker")
 
 const CACHE_NAME = "static-cache-v2"
 const DATA_CACHE_NAME = "data-cache-v1"
 
 const iconSizes = ["192", "512"]
-const iconFiles = icon.Sizes.map(
-    (size) => `/assets/images/icons/icon-${size}x${size}.png`
+const iconFiles = iconSizes.map(
+    (size) => `icons/icon-${size}x${size}.png`
 )
 
 const staticFilesToPreCache = [
     "/",
     "/index.js",
-    "db.js",
-    "styles.css",
-    "manifest.webmanifest"
+    "/db.js",
+    "/styles.css",
+    "/manifest.webmanifest"
 ].concat(iconFiles)
 
 // install
